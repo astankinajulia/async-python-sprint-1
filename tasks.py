@@ -170,7 +170,10 @@ class DataAnalyzingTask:
             data = json.load(f)
 
         cities_with_rating = sorted(data, key=lambda city: (-city['avg_temp'], -city['avg_cond']))
-        logging.info('Лучший город - %s', cities_with_rating[0]["city"])
+        try:
+            logging.info('Лучший город - %s', cities_with_rating[0]['city'])
+        except IndexError:
+            logging.error('Не получилось получить лучший город')
 
         for i, city in enumerate(cities_with_rating):
             print(f'{i + 1} - {city["city"]} - avg_temp: {city["avg_temp"]} - cond: {city["avg_cond"]}')
